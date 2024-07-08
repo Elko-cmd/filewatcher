@@ -1,0 +1,221 @@
+{
+  "1": {
+    "inputs": {
+      "video": "1489788235 (1).mp4",
+      "local_url": "/view?filename=1489788235%20(1).mp4&type=input&subfolder=n-suite",
+      "framerate": "original",
+      "resize_by": "none",
+      "size": 512,
+      "images_limit": 0,
+      "batch_size": 0,
+      "starting_frame": 0,
+      "autoplay": true,
+      "choose file to upload": "image"
+    },
+    "class_type": "LoadVideo [n-suite]",
+    "_meta": {
+      "title": "LoadVideo [🅝-🅢🅤🅘🅣🅔]"
+    }
+  },
+  "9": {
+    "inputs": {
+      "ckpt_name": "v1-5-pruned-emaonly.ckpt"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint"
+    }
+  },
+  "10": {
+    "inputs": {
+      "text": "LSD travel",
+      "clip": [
+        "9",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "11": {
+    "inputs": {
+      "text": "",
+      "clip": [
+        "9",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "12": {
+    "inputs": {
+      "control_net_name": "control_sd15_canny.pth"
+    },
+    "class_type": "ControlNetLoader",
+    "_meta": {
+      "title": "Load ControlNet Model"
+    }
+  },
+  "13": {
+    "inputs": {
+      "low_threshold": 27,
+      "high_threshold": 92,
+      "resolution": 512,
+      "image": [
+        "1",
+        0
+      ]
+    },
+    "class_type": "CannyEdgePreprocessor",
+    "_meta": {
+      "title": "Canny Edge"
+    }
+  },
+  "14": {
+    "inputs": {
+      "strength": 0.1,
+      "start_percent": 0,
+      "end_percent": 0.619,
+      "positive": [
+        "10",
+        0
+      ],
+      "negative": [
+        "11",
+        0
+      ],
+      "control_net": [
+        "12",
+        0
+      ],
+      "image": [
+        "13",
+        0
+      ]
+    },
+    "class_type": "ControlNetApplyAdvanced",
+    "_meta": {
+      "title": "Apply ControlNet (Advanced)"
+    }
+  },
+  "15": {
+    "inputs": {
+      "add_noise": "enable",
+      "noise_seed": 32464882511956,
+      "steps": 50,
+      "cfg": 15.5,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "start_at_step": 28,
+      "end_at_step": 51,
+      "return_with_leftover_noise": "disable",
+      "model": [
+        "9",
+        0
+      ],
+      "positive": [
+        "14",
+        0
+      ],
+      "negative": [
+        "14",
+        1
+      ],
+      "latent_image": [
+        "16",
+        0
+      ]
+    },
+    "class_type": "KSamplerAdvanced",
+    "_meta": {
+      "title": "KSampler (Advanced)"
+    }
+  },
+  "16": {
+    "inputs": {
+      "pixels": [
+        "1",
+        0
+      ],
+      "vae": [
+        "9",
+        2
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "17": {
+    "inputs": {
+      "METADATA": [
+        "1",
+        2
+      ],
+      "multiplier": 2,
+      "images": [
+        "18",
+        0
+      ]
+    },
+    "class_type": "FrameInterpolator [n-suite]",
+    "_meta": {
+      "title": "FrameInterpolator [🅝-🅢🅤🅘🅣🅔]"
+    }
+  },
+  "18": {
+    "inputs": {
+      "samples": [
+        "15",
+        0
+      ],
+      "vae": [
+        "9",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "19": {
+    "inputs": {
+      "METADATA": [
+        "17",
+        1
+      ],
+      "SaveVideo": true,
+      "SaveFrames": false,
+      "filename_prefix": "video",
+      "CompressionLevel": 2,
+      "videoOutWidget": null,
+      "images": [
+        "17",
+        0
+      ]
+    },
+    "class_type": "SaveVideo [n-suite]",
+    "_meta": {
+      "title": "SaveVideo [🅝-🅢🅤🅘🅣🅔]"
+    }
+  },
+  "20": {
+    "inputs": {
+      "images": [
+        "13",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  }
+}
