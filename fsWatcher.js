@@ -6,8 +6,9 @@ const inbox = "./inbox"
 const outbox = "./outbox"
 
 //ComfyUIClient-Setup-Variables 
-const serverAddress = '127.0.0.1:8188';
-let prompt = require('./workflows/workflow_api.json');
+const serverAddress = '192.168.1.196:42421';
+let p = require('./workflows/workflow_api (3).json');
+let prompt = JSON.parse(JSON.stringify(p));
 const clientId = 'okle';
 const client = new ComfyUIClient(serverAddress, clientId);
 

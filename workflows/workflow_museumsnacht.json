@@ -153,8 +153,8 @@
         "Node name for S&R": "LoadVideo [n-suite]"
       },
       "widgets_values": [
-        "1489788235 (1).mp4",
-        "/view?filename=1489788235%20(1).mp4&type=input&subfolder=n-suite",
+        "1489788235.mp4",
+        "/view?filename=1489788235.mp4&type=input&subfolder=n-suite",
         "original",
         "none",
         512,
@@ -282,7 +282,7 @@
         "Node name for S&R": "CheckpointLoaderSimple"
       },
       "widgets_values": [
-        "v1-5-pruned-emaonly.ckpt"
+        "sd_xl_base_1.0.safetensors"
       ]
     },
     {
@@ -314,7 +314,7 @@
         "Node name for S&R": "ControlNetLoader"
       },
       "widgets_values": [
-        "control_sd15_canny.pth"
+        "control_v11p_sd15_canny_fp16.safetensors"
       ]
     },
     {
@@ -411,7 +411,7 @@
       },
       "widgets_values": [
         "enable",
-        32464882511956,
+        769870341526180,
         "randomize",
         50,
         15.5,
@@ -538,7 +538,7 @@
       ],
       "size": [
         315,
-        385.9999771118164
+        386
       ],
       "flags": {},
       "order": 12,
@@ -792,6 +792,14 @@
   ],
   "groups": [],
   "config": {},
-  "extra": {},
+  "extra": {
+    "ds": {
+      "scale": 0.8140274938683988,
+      "offset": {
+        "0": 755.4944458007812,
+        "1": 72.61785888671875
+      }
+    }
+  },
   "version": 0.4
 }

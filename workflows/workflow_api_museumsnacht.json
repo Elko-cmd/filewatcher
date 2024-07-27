@@ -1,8 +1,8 @@
 {
   "1": {
     "inputs": {
-      "video": "1489788235 (1).mp4",
-      "local_url": "/view?filename=1489788235%20(1).mp4&type=input&subfolder=n-suite",
+      "video": "1489788235.mp4",
+      "local_url": "/view?filename=1489788235.mp4&type=input&subfolder=n-suite",
       "framerate": "original",
       "resize_by": "none",
       "size": 512,
@@ -19,7 +19,7 @@
   },
   "9": {
     "inputs": {
-      "ckpt_name": "v1-5-pruned-emaonly.ckpt"
+      "ckpt_name": "sd_xl_base_1.0.safetensors"
     },
     "class_type": "CheckpointLoaderSimple",
     "_meta": {
@@ -54,7 +54,7 @@
   },
   "12": {
     "inputs": {
-      "control_net_name": "control_sd15_canny.pth"
+      "control_net_name": "control_v11p_sd15_canny_fp16.safetensors"
     },
     "class_type": "ControlNetLoader",
     "_meta": {
@@ -106,7 +106,7 @@
   "15": {
     "inputs": {
       "add_noise": "enable",
-      "noise_seed": 32464882511956,
+      "noise_seed": 769870341526180,
       "steps": 50,
       "cfg": 15.5,
       "sampler_name": "euler",
