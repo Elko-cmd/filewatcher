@@ -6,7 +6,7 @@ const { ComfyUIClient } = require('comfy-ui-client');
 const inbox = "./inbox"
 const outbox = "./outbox"
 
-let fileURL ="./outbox/1489788235.mp4"
+ export let fileURL ="./outbox/1489788235.mp4"
 
 //ComfyUIClient-Setup-Variables 
 const serverAddress = '192.168.1.196:42421';
