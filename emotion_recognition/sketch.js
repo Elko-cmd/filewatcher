@@ -1,6 +1,8 @@
 export let detecedEmotions;
 export let fileUrl;
 
+import p5 from 'p5';
+
 let capture;
 let capturewidth = 640;    
 let captureheight = 480;
