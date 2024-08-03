@@ -1,7 +1,11 @@
+export let detecedEmotions;
+export let fileUrl;
+
 let capture;
 let capturewidth = 640;    
 let captureheight = 480;
-var directory = "inbox/esempio.mp4";
+var directory = fileUrl;
+
 
 let emotions = ["neutral", "happy", "sad", "angry", "fearful", "disgusted", "surprised"];
 let emotionCounters = {
@@ -43,6 +47,8 @@ function videoEnded() {
   // Calculate and print the most prevalent emotion
   let mostPrevalentEmotion = getMostPrevalentEmotion();
   console.log("Most prevalent emotion: " + mostPrevalentEmotion);
+  mostPrevalentEmotion = detecedEmotions;
+  return mostPrevalentEmotion
 }
 
 function getMostPrevalentEmotion() {

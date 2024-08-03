@@ -1,3 +1,4 @@
+import * as emotion_recognition from "./emotion_recognition/sketch.js";
 
 const fs = require('fs');
 const { ComfyUIClient } = require('comfy-ui-client');
@@ -5,13 +6,14 @@ const { ComfyUIClient } = require('comfy-ui-client');
 const inbox = "./inbox"
 const outbox = "./outbox"
 
+let fileURL ="./outbox/1489788235.mp4"
+
 //ComfyUIClient-Setup-Variables 
 const serverAddress = '192.168.1.196:42421';
 let p = require('./workflows/workflow_api (3).json');
 let prompt = JSON.parse(JSON.stringify(p));
 const clientId = 'okle';
 const client = new ComfyUIClient(serverAddress, clientId);
-
 
 
 // Set the text prompt for our positive CLIPTextEncode
@@ -31,7 +33,10 @@ async function setdown() {
 }
 async function main() {
     prompt['10'].inputs.seed = seed();
-    prompt["1"].inputs.video.local_url = "./outbox/1489788235.mp4";
+    prompt["1"].inputs.video.local_url = fileURL;
+    emotion_recognition.fileUrl = fileUrl;
+    emotion_recognition.detecedEmotions
+
     const images = await client.getImages(prompt);
     await client.saveImages(images, outbox);
     //console.log(images);
