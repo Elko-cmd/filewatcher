@@ -1,12 +1,15 @@
 import * as emotion_recognition from "./emotion_recognition/sketch.js";
+import main from "./prompter/prompter.js";
 
 const fs = require('fs');
-const { ComfyUIClient } = require('comfy-ui-client');
 
 const inbox = "./inbox"
 const outbox = "./outbox"
 
 let fileURL ="./outbox/1489788235.mp4"
+//Prompting 
+main(fileURL,"destiny, gadget, underwater, lovestory, animals, photrealistic, computer ");
+
 
 //ComfyUIClient-Setup-Variables 
 const serverAddress = '192.168.1.196:42421';
