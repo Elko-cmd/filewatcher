@@ -8,14 +8,32 @@ const inbox = "../../inbox"
 const outbox = "../../outbox"
 
 let fileURL = "../../outbox/1489788235.mp4"
-//converting video
-videoConverter(fileURL, "outbox/1489788235.mp4");
-//rebase the fileURL
-fileURL = fileURL;
-//Prompting Comfyui
-main(fileURL, "destiny, gadget, underwater, lovestory, animals, photrealistic, computer ");
 
+let fileUrlFromFileWatcher;
 
+let prompt = require('./workflows/workflow_api (3).json');
+
+let mainPlumbingFunction = async (fileUrlFromFileWatcher, outbox = "../video_changer/out", prompt) => {
+    // Initialize variables to hold the file URL and the prompt
+    let fileUrlFromVideoConverter;
+    let promptResult;
+    try {
+        // Try to convert the file to mp4 and get the new file URL
+        fileUrlFromVideoConverter = await videoConverter(fileUrlFromFileWatcher, outbox, ".mp4")
+
+        // If the conversion is successful, proceed to prompt the ComfyUi
+        // with the new file URL
+        promptResult = await main(fileUrlFromVideoConverter, prompt)
+
+        // If everything is successful, return an object indicating the status and message
+        return { status: 200, message: 'Done', file: promptResult }
+
+    } catch (error) {
+        // If there is an error, log the error and return an object indicating the status and message
+        console.error("Error:", error);
+        return { status: 500, message: 'Error' }
+    }
+}
 // Watch the folder for file changes, put them into a queue
 // let queue = []
 
