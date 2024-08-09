@@ -26,3 +26,5 @@ const path = "./inbox" // Inboxfolder
 const outbox = "./outbox" //Outboxfolder
 const serverAddress = '127.0.0.1:8188'; //Serveradress for ComfyUI
 ```
+
+package.json file contains all of your dependencies. When you need to download your project on another device, all you need to do is run npm install - that will generate node_modules automatically.

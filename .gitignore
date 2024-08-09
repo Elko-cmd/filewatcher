@@ -1,2 +1,5 @@
 #ignore all mp4
 *.mp4
+
+# ignore all node-modules
+/node_modules
