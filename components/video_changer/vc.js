@@ -36,5 +36,5 @@ export async function videoConverter(inputPath = "", outboxPath = "../../outbox"
 
 // This is an example of how to use the videoConverter function.
 
-let u = videoConverter("../Filesystemwatcher/components/video_changer/1723123809.h264", "../Filesystemwatcher/outbox", ".mp4");
+let u = await videoConverter("../components/video_changer/1723123845.h264", "../Filesystemwatcher/outbox", ".mp4");
 console.log(u)
