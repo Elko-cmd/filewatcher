@@ -12,7 +12,7 @@ export async function videoConverter(inputPath = "", outboxPath = "../../outbox"
     let randomName = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     console.log(randomName)
 
-    let outPath = outboxPath + "/" + randomName + "." + fileFormat
+    let outPath = outboxPath + "/" + randomName + fileFormat
 
     hbjs.spawn({
         input: inputPath, output: outPath
@@ -36,5 +36,5 @@ export async function videoConverter(inputPath = "", outboxPath = "../../outbox"
 
 // This is an example of how to use the videoConverter function.
 
-let u = await videoConverter("../components/video_changer/1723123845.h264", "../Filesystemwatcher/outbox", ".mp4");
+let u = await videoConverter("./1723123845.h264", "./", ".mp4");
 console.log(u)
