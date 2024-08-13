@@ -21,6 +21,10 @@ let mainPlumbingFunction = async (fileUrlFromFileWatcher, outbox = "../video_cha
         // Try to convert the file to mp4 and get the new file URL
         fileUrlFromVideoConverter = await videoConverter(fileUrlFromFileWatcher, outbox, ".mp4")
 
+        //! Emotion recognition needs to bee implemented here.
+
+        
+
         // If the conversion is successful, proceed to prompt the ComfyUi
         // with the new file URL
         promptResult = await prompterQueue(fileUrlFromVideoConverter, promptText, workflow, comfyUiServerAddresse)
@@ -35,25 +39,3 @@ let mainPlumbingFunction = async (fileUrlFromFileWatcher, outbox = "../video_cha
     }
 }
 
-
-
-// Watch the folder for file changes, put them into a queue
-// let queue = []
-
-// const watcher = fs.watch(inbox, (eventType, filename) => {
-//     if (filename) {
-//         console.log(`File ${filename} changed with event type: ${eventType}`);
-//         queue.push(filename);
-//         console.log("Queue: " + queue);
-//     }
-// });
-
-// Run the main function when the queue is not empty, or after 5 seconds have passed
-// setInterval(async () => {
-//     if (queue.length > 0 || !watcher) {
-//         const result = await run();
-//         if (result.status == 200) {
-//             await run();
-//         }
-//     }
-// }, 2000);
