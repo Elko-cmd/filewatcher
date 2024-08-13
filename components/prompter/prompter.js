@@ -1,72 +1,72 @@
-// ** queuePrompt from https://stablecanvas.github.io/comfyui-client/classes/ComfyUIApiClient.html#queuePrompt
-// queuePrompt(queue_index, options): Promise<QueuePrompt>
-// Parameters
-// queue_index: number
-// The index at which to queue the prompt, passing -1 will insert the prompt at the front of the queue
 
-// options: {
-//     prompt: any;
-//     workflow: any;
-// }
-// prompt: any
-// The prompt to queue
+let server_address = '127.0.0.1:8188';
+let client_id = 'okle';
+import { workflow } from "../../config";
+let prompt = workflow
+let texter ="(Masterpiece, Best Quality:1.2), Create a surrealistic portrait showing hidden, gifted faces emerging from a complex network of neural connections and brain structures. The faces should be mysterious and expressive, with bright colors and fascinating details that reflect the intelligence and creativity of the human mind. The background should be abstract and dreamlike to emphasize the idea of the hidden brain";
 
-// workflow: any
-// This png info to be added to resulting image
+//prompt[7].inputs.steps = 10;
 
-// Returns Promise<QueuePrompt>
-// The response from the server
-
-// Defined in src/ComfyUIApiClient.ts:132
-
-const { ComfyUIClient } = require('comfy-ui-client');
-
-let defaultPrompt = "destiny, gadget, underwater, lovestory, animals, photrealistic, computer";
-
-async function setup() {
-    await client.connect();
-    console.log('Connected!');
-}
 /**
- * Queues a prompt for the ComfyUIClient.
- *
- * @param {string} fileURL - The URL of the file.
- * @param {string} [promptText='destiny, gadget, underwater, lovestory, animals, photrealistic, computer'] - The prompt text.
- * @param {object} workflow - The workflow object.
- * @param {string} [serverAddresse='192.168.1.196:42421'] - The server address.
- * @return {Promise<{status: number, message: string}>} A promise that resolves to an object with a status and a message.
+ * Sends a prompt to the server for processing and logs the current text input and seed.
+ * Optionally, you can include a file path to attach a video file to the prompt.
+ * 
+ * @async
+ * @function queuePrompt
+ * @param {object} prompt - The prompt object to be sent to the server.
+ * @param {string} server_address - The address of the server where the prompt will be sent.
+ * @param {string} [filePath=undefined] - The file path to a video file to attach to the prompt (optional).
+ * @param {string} [text=texter] - The text input to include in the prompt (optional, defaults to `texter`).
+ * @param {string} [client_id="okle"] - The client ID to include with the prompt (optional, defaults to "okle").
+ * @returns {Promise<object>} The server's response to the prompt.
+ * 
+ * @example
+ * const prompt = { ... }; // Your prompt object
+ * const serverAddress = "localhost:8000";
+ * const filePath = "/path/to/video.mp4";
+ * const text = "Sample text";
+ * const clientId = "myClientId";
+ * 
+ * queuePrompt(prompt, serverAddress, filePath, text, clientId)
+ *   .then(response => {
+ *     console.log("Prompt processed successfully:", response);
+ *   })
+ *   .catch(error => {
+ *     console.error("Error processing prompt:", error);
+ *   });
  */
-export async function prompterQueue(fileURL, promptText = defaultPrompt, workflow, serverAddresse = '192.168.1.196:42421') {
-    console.log("prompting from prompter in main: " + prompting);
-    //ComfyUIClient-Setup-Variables 
+export async function queuePrompt(prompt,server_address,filePath=undefined,text = texter,client_id="okle") {
+    const p = { prompt, client_id };
+    
+    p.prompt[7].inputs.seed = Math.floor(Math.random() * 10000000000000);
+    p.prompt[3].inputs.text = text;
 
-    let p = workflow
-    let workflow = JSON.parse(JSON.stringify(p));
-    const clientId = 'okle';
-    const client = new ComfyUIClient(serverAddresse, clientId);
+    if(filePath){
+        p.prompt[105].inputs.video = filePath;
+    }
+ 
+    // console.log
+    console.log(p.prompt[3].inputs.text);
+    console.log(p.prompt[7].inputs.seed);
+    
+    //stringify the prompt
+    const data = JSON.stringify(p);
 
-    // Set the text prompt for our positive CLIPTextEncode
+    //fetch the comfyui endpoint with a POST request with the prompt
+    return fetch(`http://${server_address}/prompt`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: data
+    })
+    .then(response => response.json())
+    .then(
+        fetch(`http://${server_address}/prompt`)
+        .then(response => response.json())
+        .then(data => console.log("Prompt Queue seed:" + p.prompt[7].inputs.seed + "Prompt Queue remaining: " + data.exec_info.queue_remaining ))
+        .catch(error => console.error(error))
+    )
+ 
+  }
 
-    // workflow['10'].inputs.steps = 50;
-    // workflow['10'].inputs.cfg = 8.0;
-    let seed = () => Math.floor(Math.random() * 10000000000000)
-    //Prompt the server
-    await setup()
-    //every prompt needs a random seed
-    workflow['10'].inputs.seed = seed();
-    //Every prompt needs a video
-    workflow["1"].inputs.video.local_url = fileURL;
-
-    workflow['12'].inputs.text = promptText;
-
-
-    // const images = await client.getImages(workflow);
-    // await client.saveImages(images, outbox);
-    //console.log(images);
-
-    await client.queuePrompt(client.queue.length + 1, { prompt: promptText, workflow: workflow });
-
-    return { status: 200, message: 'Done' }
-}
-
+ queuePrompt(prompt,"127.0.0.1:8188",undefined)
 

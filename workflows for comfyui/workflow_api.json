@@ -1,7 +1,7 @@
 {
   "2": {
     "inputs": {
-      "vae_name": "orangemix.vae.pt"
+      "vae_name": "vae-ft-mse-840000-ema-pruned.safetensors"
     },
     "class_type": "VAELoader",
     "_meta": {
@@ -321,7 +321,7 @@
   },
   "120": {
     "inputs": {
-      "seed": 1089527405502486,
+      "seed": 8143693798252,
       "steps": 20,
       "cfg": 4,
       "sampler_name": "dpmpp_2m_sde",
