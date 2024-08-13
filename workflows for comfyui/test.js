@@ -1,8 +1,8 @@
 
-let server_address = '127.0.0.1:42421';
+let server_address = '127.0.0.1:8188';
 let client_id = 'okle';
 
-let prompt = require("../workflows for comfyui/workflow_api (5)-picture.json")
+let prompt = require("../workflows for comfyui/workflow_api.json")
 
 
 
@@ -17,4 +17,4 @@ async function queuePrompt(prompt) {
     .then(response => response.json());
   }
 
-queuePrompt(prompt)
+ queuePrompt(prompt)
