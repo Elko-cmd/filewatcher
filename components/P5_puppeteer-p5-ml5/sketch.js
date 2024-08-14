@@ -1,7 +1,7 @@
 let capture;
 let captureWidth = 640;    
 let captureHeight = 480;
-let directory = "esempio.mp4"; 
+let directory = "1723123845.mp4"; 
 
 let emotions = ["neutral", "happy", "sad", "angry", "fearful", "disgusted", "surprised"];
 let emotionCounters = {
@@ -23,6 +23,7 @@ function setup() {
   
   // Create a button to start the audio context
   playButton = createButton('Start Video');
+  playButton.id('playButton');
   playButton.position(10, captureHeight + 10);
   playButton.mousePressed(startVideo);
 
@@ -44,7 +45,8 @@ function startVideo() {
 
 function videoLoaded() {
   console.log("Video loaded"); // Log when video is loaded
-  capture.pause(); // Start paused
+  //capture.pause(); // Start pause
+  startVideo()
 }
 
 function faceReady() {
