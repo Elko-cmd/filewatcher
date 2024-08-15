@@ -1,4 +1,4 @@
-import * as workflower from "./workflows for comfyui/workflow_api.json"
+import * as workflower from "./workflow/workflow_api.json"
 export let comfyUiServerAddresse  ="127.0.0.1:8188/";
 export let inbox = "./inbox"
 export let outbox = "./outbox"
