@@ -1,7 +1,17 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require("puppeteer");
+export var emot = " ";
 
+let emotions = [
+  "neutral",
+  "happy",
+  "sad",
+  "angry",
+  "fearful",
+  "disgusted",
+  "surprised",
+];
 async function delay(time) {
-    return new Promise(resolve => setTimeout(resolve, time));
+  return new Promise((resolve) => setTimeout(resolve, time));
 }
 
 /**
@@ -10,54 +20,63 @@ async function delay(time) {
  *
  * @return {Promise<void>} A promise that resolves when the sketch has finished running.
  */
-async function runSketch() {
-    // Launch a headless browser
-    const browser = await puppeteer.launch({ headless: false,args:['--allow-file-access-from-files',"--autoplay-policy=no-user-gesture-required"] });
-    const page = await browser.newPage();
+export async function runSketch(filePath) {
+  // Launch a headless browser
+  const browser = await puppeteer.launch({
+    headless: false,
+    args: [
+      "--allow-file-access-from-files",
+      "--autoplay-policy=no-user-gesture-required",
+    ],
+  });
+  const page = await browser.newPage();
+  const fileUrl = `file://${__dirname}/index.html`;
+  await page.goto(fileUrl, { waitUntil: "networkidle0" });
 
-    // Set the viewport size
-    await page.setViewport({ width: 640, height: 480 });
+  await page.setViewport({ width: 640, height: 480 });
 
-    // Serve the local HTML file
-    const fileUrl = `file://${__dirname}/index.html`;
-        await page.goto(fileUrl, { waitUntil: 'networkidle0' });
-    
-    // Wait for the sketch to load
-    await page.waitForSelector('button');
-    // Press the button in p5 sketch
-    // await page.evaluate(() => {
-    //     const button = document.querySelector('button');
-    //     if (button) {
-    //       button.click();
-    //     } else {
-    //       console.log('Button not found');
-    //     }
-    //   });
-    // Capture all console messages from the page and log them to the Node.js console
-    page.on('console', msg => {
-        const type = msg.type(); // Get the message type
-        const message = msg.text(); // Get the message text
-        console.log(`[${type.toUpperCase()}] ${message}`); // Log the type and message
-    });
+  await page.waitForSelector("canvas");
+  let file = filePath;
+  await page.evaluate((value) => {
+    window.setFilePath(value);
+  }, file);
 
-    // Wait for the sketch to run for a specified time (e.g., 10 seconds)
-    await delay(20000); // Wait for 10 seconds
+  await delay(100);
+  await page.reload();
+  // Capture all console messages from the page and log them to the Node.js console
 
-    // Close the browser
-    //await browser.close();
+  // Evaluate a function in the browser context, passing the fileUrl as an argument to the function.
+  // This function calls the setValue function in the p5.js sketch, which sets the fileUrl variable
+  // in the p5.js sketch to the value of the fileUrl argument.
+  // This allows us to pass the fileUrl to the p5.js sketch from the Node.js script.
+
+  let emotion;
+  page.on("console", (msg) => {
+    const type = msg.type(); // Get the message type
+    const message = msg.text(); // Get the message text
+    console.log(`[${type.toUpperCase()}] ${message}`); // Log the type and message
+    if (emotions.some((emotion) => message.includes(emotion))) {
+      console.log(message);
+      emotion = message;
+    }
+  });
+  // Wait for the sketch to run for a specified time (e.g., 10 seconds)
+  await delay(10000); // Wait for 10 seconds
+
+  // Close the browser
+  //await browser.close();
+  return emotion;
 }
-
-runSketch().catch(console.error);
-
-
+emot = await runSketch("1723226863.mp4").catch(console.error);
+console.log(emot, "emot");
 //Not Allowed to Load Local Resource
 //Error Message:
 
 //Not allowed to load local resource: blob:null/...
 
 //Solution:
-//This error typically occurs when the browser restricts access to local files for security reasons, 
-//especially when using file:// protocol. To fix this, serve your files through a local server instead 
+//This error typically occurs when the browser restricts access to local files for security reasons,
+//especially when using file:// protocol. To fix this, serve your files through a local server instead
 //of accessing them via file paths. Here are a couple of ways to do this:
 
 //Using Python (if installed):
@@ -75,4 +94,3 @@ runSketch().catch(console.error);
 //http-server
 
 //Access your project at the given URL (e.g., http://127.0.0.1:8080).
-

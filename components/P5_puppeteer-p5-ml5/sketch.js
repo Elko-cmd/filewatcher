@@ -1,7 +1,14 @@
 let capture;
 let captureWidth = 640;
 let captureHeight = 480;
-let directory = "esempio.mp4";
+
+let directory;
+
+//this is the function that will give use the new fileurl from puppeteer
+function setFilePath(fileUrl) {
+  directory = fileUrl;
+  console.log(directory, "directory");
+}
 
 let emotions = [
   "neutral",
@@ -25,7 +32,7 @@ let emotionCounters = {
 let faceapi;
 let detections = [];
 
-function setup() {
+async function setup() {
   createCanvas(captureWidth, captureHeight);
 
   // Load the video and set up face API
@@ -39,13 +46,14 @@ function setup() {
     withDescriptors: false,
   };
   faceapi = ml5.faceApi(capture, faceOptions, faceReady);
-
+  await faceapi;
+  capture.play();
   capture.onended(videoEnded); // Handle video end
 }
 
 function videoLoaded() {
   console.log("Video loaded");
-  capture.play(); // Start the video automatically
+  // Start the video automatically
   capture.volume(1); // Set volume to 1
 }
 
@@ -75,11 +83,11 @@ function gotFaces(error, result) {
 function videoEnded() {
   // Calculate and print the most prevalent emotion
   let mostPrevalentEmotion = getMostPrevalentEmotion();
-  console.log("Most prevalent emotion: " + mostPrevalentEmotion);
+  console.log(mostPrevalentEmotion);
 }
 
 function getMostPrevalentEmotion() {
-  let maxEmotion = '';
+  let maxEmotion = "";
   let maxCount = 0;
   for (let emotion in emotionCounters) {
     if (emotionCounters[emotion] > maxCount) {
