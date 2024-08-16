@@ -1,7 +1,7 @@
 let capture;
 let captureWidth = 640;
 let captureHeight = 480;
-let directory = "1723226580.mp4";
+let directory = "1723123845.mp4";
 
 let emotions = [
   "neutral",
@@ -46,9 +46,6 @@ function setup() {
     withDescriptors: false,
   };
   faceapi = ml5.faceApi(capture, faceOptions, faceReady);
-
-  capture.onended(videoEnded); // Handle video end
-  
 }
 
 function startVideo() {
@@ -83,24 +80,7 @@ function gotFaces(error, result) {
     }
   }
   faceapi.detect(gotFaces); // Continue detecting
-}
-
-function videoEnded() {
-  // Calculate and print the most prevalent emotion
-  let mostPrevalentEmotion = getMostPrevalentEmotion();
-  console.log("Most prevalent emotion: " + mostPrevalentEmotion);
-}
-
-function getMostPrevalentEmotion() {
-  let maxEmotion = "";
-  let maxCount = 0;
-  for (let emotion in emotionCounters) {
-    if (emotionCounters[emotion] > maxCount) {
-      maxCount = emotionCounters[emotion];
-      maxEmotion = emotion;
-    }
-  }
-  return maxEmotion;
+  //console.log("try to detect faces!");
 }
 
 function draw() {
