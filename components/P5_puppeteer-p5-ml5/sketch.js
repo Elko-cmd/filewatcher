@@ -1,7 +1,7 @@
 let capture;
 let captureWidth = 640;
 let captureHeight = 480;
-let directory = "1723123845.mp4";
+let directory = "esempio.mp4";
 
 let emotions = [
   "neutral",
@@ -29,7 +29,7 @@ let playButton;
 function setup() {
   createCanvas(captureWidth, captureHeight);
 
-  // Create a button to start the audio context
+  // Create a button to start the video
   playButton = createButton("Start Video");
   playButton.id("playButton");
   playButton.position(10, captureHeight + 10);
@@ -46,23 +46,23 @@ function setup() {
     withDescriptors: false,
   };
   faceapi = ml5.faceApi(capture, faceOptions, faceReady);
+
+  capture.onended(videoEnded); // Handle video end
 }
 
 function startVideo() {
   getAudioContext().resume(); // Resume the audio context for sound
   playButton.hide(); // Hide the button after clicking
-  capture.loop(); // Start the video loop
+  capture.play(); // Start the video (only once)
   capture.volume(1); // Set volume to 1
 }
 
 function videoLoaded() {
-  console.log("Video loaded"); // Log when video is loaded
-  //capture.pause(); // Start pause
-  startVideo();
+  console.log("Video loaded");
 }
 
 function faceReady() {
-  console.log("Face API is ready"); // Log when face API is ready
+  console.log("Face API is ready");
   faceapi.detect(gotFaces); // Start detecting faces
 }
 
@@ -82,7 +82,24 @@ function gotFaces(error, result) {
     }
   }
   faceapi.detect(gotFaces); // Continue detecting
-  //console.log("try to detect faces!");
+}
+
+function videoEnded() {
+  // Calculate and print the most prevalent emotion
+  let mostPrevalentEmotion = getMostPrevalentEmotion();
+  console.log("Most prevalent emotion: " + mostPrevalentEmotion);
+}
+
+function getMostPrevalentEmotion() {
+  let maxEmotion = '';
+  let maxCount = 0;
+  for (let emotion in emotionCounters) {
+    if (emotionCounters[emotion] > maxCount) {
+      maxCount = emotionCounters[emotion];
+      maxEmotion = emotion;
+    }
+  }
+  return maxEmotion;
 }
 
 function draw() {
