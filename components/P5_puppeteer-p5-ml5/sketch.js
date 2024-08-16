@@ -4,11 +4,14 @@ let captureHeight = 480;
 
 let directory;
 
+
+window.setFilePath = function (value) {
+  directory = value;
+  console.log("Received value:", directory);
+};
+
 //this is the function that will give use the new fileurl from puppeteer
-function setFilePath(fileUrl) {
-  directory = fileUrl;
-  console.log(directory, "directory");
-}
+
 
 let emotions = [
   "neutral",
