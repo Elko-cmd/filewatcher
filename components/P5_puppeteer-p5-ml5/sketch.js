@@ -24,18 +24,11 @@ let emotionCounters = {
 
 let faceapi;
 let detections = [];
-let playButton;
 
 function setup() {
   createCanvas(captureWidth, captureHeight);
 
-  // Create a button to start the video
-  playButton = createButton("Start Video");
-  playButton.id("playButton");
-  playButton.position(10, captureHeight + 10);
-  playButton.mousePressed(startVideo);
-
-  // Load the video
+  // Load the video and set up face API
   capture = createVideo(directory, videoLoaded);
   capture.size(captureWidth, captureHeight);
   capture.hide();
@@ -50,15 +43,10 @@ function setup() {
   capture.onended(videoEnded); // Handle video end
 }
 
-function startVideo() {
-  getAudioContext().resume(); // Resume the audio context for sound
-  playButton.hide(); // Hide the button after clicking
-  capture.play(); // Start the video (only once)
-  capture.volume(1); // Set volume to 1
-}
-
 function videoLoaded() {
   console.log("Video loaded");
+  capture.play(); // Start the video automatically
+  capture.volume(1); // Set volume to 1
 }
 
 function faceReady() {
@@ -103,10 +91,10 @@ function getMostPrevalentEmotion() {
 }
 
 function draw() {
-  background(2);
+  background(0);
   image(capture, 0, 0, captureWidth, captureHeight); // Display the video
 
-  // Draw the detections and emot
+  // Draw the detections and emotions
   if (detections.length > 0) {
     for (let i = 0; i < detections.length; i++) {
       let points = detections[i].landmarks.positions;
