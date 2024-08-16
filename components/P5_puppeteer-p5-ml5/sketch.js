@@ -1,9 +1,17 @@
 let capture;
-let captureWidth = 640;    
+let captureWidth = 640;
 let captureHeight = 480;
-let directory = "1723123845.mp4"; 
+let directory = "1723123845.mp4";
 
-let emotions = ["neutral", "happy", "sad", "angry", "fearful", "disgusted", "surprised"];
+let emotions = [
+  "neutral",
+  "happy",
+  "sad",
+  "angry",
+  "fearful",
+  "disgusted",
+  "surprised",
+];
 let emotionCounters = {
   neutral: 0,
   happy: 0,
@@ -11,7 +19,7 @@ let emotionCounters = {
   angry: 0,
   fearful: 0,
   disgusted: 0,
-  surprised: 0
+  surprised: 0,
 };
 
 let faceapi;
@@ -20,10 +28,10 @@ let playButton;
 
 function setup() {
   createCanvas(captureWidth, captureHeight);
-  
+
   // Create a button to start the audio context
-  playButton = createButton('Start Video');
-  playButton.id('playButton');
+  playButton = createButton("Start Video");
+  playButton.id("playButton");
   playButton.position(10, captureHeight + 10);
   playButton.mousePressed(startVideo);
 
@@ -32,7 +40,11 @@ function setup() {
   capture.size(captureWidth, captureHeight);
   capture.hide();
 
-  const faceOptions = { withLandmarks: true, withExpressions: true, withDescriptors: false };
+  const faceOptions = {
+    withLandmarks: true,
+    withExpressions: true,
+    withDescriptors: false,
+  };
   faceapi = ml5.faceApi(capture, faceOptions, faceReady);
 }
 
@@ -46,7 +58,7 @@ function startVideo() {
 function videoLoaded() {
   console.log("Video loaded"); // Log when video is loaded
   //capture.pause(); // Start pause
-  startVideo()
+  startVideo();
 }
 
 function faceReady() {
@@ -70,6 +82,7 @@ function gotFaces(error, result) {
     }
   }
   faceapi.detect(gotFaces); // Continue detecting
+  //console.log("try to detect faces!");
 }
 
 function draw() {
@@ -90,9 +103,13 @@ function draw() {
         let thisEmotion = emotions[k];
         let thisEmotionLevel = detections[i].expressions[thisEmotion];
         fill(255);
-        text(thisEmotion + " value: " + thisEmotionLevel.toFixed(2), 40, 30 + 30 * k);
+        text(
+          thisEmotion + " value: " + thisEmotionLevel.toFixed(2),
+          40,
+          30 + 30 * k
+        );
         rect(40, 30 + 30 * k, thisEmotionLevel * 100, 10);
-      }  
+      }
     }
   }
 }

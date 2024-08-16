@@ -44,7 +44,7 @@ async function runSketch() {
     await delay(20000); // Wait for 10 seconds
 
     // Close the browser
-    await browser.close();
+    //await browser.close();
 }
 
 runSketch().catch(console.error);
