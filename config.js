@@ -36,4 +36,4 @@ export function logVariables() {
   console.log("End of config.js");
 }
 
-logVariables();
+
