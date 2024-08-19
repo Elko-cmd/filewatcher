@@ -24,6 +24,7 @@ async function delay(time) {
  * @param {string} filePath - The file path to be used in the sketch. //we need to pass the definitiv path of the vidoe to the function here.
  * @return {Promise<string>} A promise that resolves with the detected emotion when the sketch has finished running.
  */
+
 export async function runSketch(filePath) {
   // Launch a headless browser
   const browser = await puppeteer.launch({
