@@ -1,7 +1,7 @@
 {
   "2": {
     "inputs": {
-      "vae_name": "vae-ft-mse-840000-ema-pruned.safetensors"
+      "vae_name": "sdxl_vae.safetensors"
     },
     "class_type": "VAELoader",
     "_meta": {
@@ -10,7 +10,7 @@
   },
   "3": {
     "inputs": {
-      "text": "(Masterpiece, Best Quality:1.2), Create a surrealistic portrait showing hidden, gifted faces emerging from a complex network of neural connections and brain structures. The faces should be mysterious and expressive, with bright colors and fascinating details that reflect the intelligence and creativity of the human mind. The background should be abstract and dreamlike to emphasize the idea of ​​the 'hidden brain' (background inside dark, moody:1.3) , POV, nikon d850, film stock photograph ,4 kodak portra 400 ,camera f1.6 lens ,rich colors ,hyper realistic ,lifelike texture, dramatic lighting , cinestill 800 rimlight (editorial photograph) BREAK\n(highly detailed face:1.4) (smile:0.7) BREAK\n",
+      "text": "(Masterpiece, Best Quality:1.2), Create a surrealistic portrait showing hidden, gifted faces emerging from a complex network of neural connections and brain structures. The faces should be mysterious and expressive, with bright colors and fascinating details that reflect the intelligence and creativity of the human mind. The background should be abstract and dreamlike to emphasize the idea of ​​the 'hidden brain' ",
       "clip": [
         "107",
         1
@@ -23,7 +23,7 @@
   },
   "6": {
     "inputs": {
-      "text": "(bad quality, worst quality:1.2)  (semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime:1.4)",
+      "text": "(bad quality, worst quality:1.2)",
       "clip": [
         "107",
         1
@@ -139,7 +139,7 @@
   },
   "70": {
     "inputs": {
-      "control_net_name": "control_v11p_sd15_canny_fp16.safetensors"
+      "control_net_name": "controlnet-sd-xl-1.0-softedge-dexined.safetensors"
     },
     "class_type": "ControlNetLoaderAdvanced",
     "_meta": {
@@ -211,7 +211,7 @@
   },
   "107": {
     "inputs": {
-      "ckpt_name": "v1-5-pruned-emaonly.ckpt"
+      "ckpt_name": "sd_xl_base_1.0.safetensors"
     },
     "class_type": "CheckpointLoaderSimple",
     "_meta": {
@@ -312,7 +312,7 @@
   },
   "119": {
     "inputs": {
-      "model_name": "v3_sd15_mm.ckpt"
+      "model_name": "mm_sdxl_v10_beta.ckpt"
     },
     "class_type": "ADE_LoadAnimateDiffModel",
     "_meta": {
@@ -321,7 +321,7 @@
   },
   "120": {
     "inputs": {
-      "seed": 8143693798252,
+      "seed": 1089527405502486,
       "steps": 20,
       "cfg": 4,
       "sampler_name": "dpmpp_2m_sde",
