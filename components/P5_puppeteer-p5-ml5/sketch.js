@@ -1,17 +1,9 @@
 let capture;
 let captureWidth = 640;
 let captureHeight = 480;
-
-let directory;
-
-
-window.setFilePath = function (value) {
-  directory = value;
-  console.log("Received value:", directory);
-};
+let directory = "";
 
 //this is the function that will give use the new fileurl from puppeteer
-
 
 let emotions = [
   "neutral",
@@ -35,11 +27,22 @@ let emotionCounters = {
 let faceapi;
 let detections = [];
 
-async function setup() {
-  createCanvas(captureWidth, captureHeight);
+async function preload() {
+  document.querySelector('input').addEventListener('input', event => {
+    directory = event.target.value;
+    if (directory.endsWith('.mp4')) {
+      s1()
+    }
 
+  });
+}
+
+async function s1() {
+
+  createCanvas(captureWidth, captureHeight);
+  console.log(directory, "from setup");
   // Load the video and set up face API
-  capture = createVideo(directory, videoLoaded);
+  capture = await createVideo(directory, videoLoaded);
   capture.size(captureWidth, captureHeight);
   capture.hide();
 
@@ -48,9 +51,8 @@ async function setup() {
     withExpressions: true,
     withDescriptors: false,
   };
-  faceapi = ml5.faceApi(capture, faceOptions, faceReady);
-  await faceapi;
-  capture.play();
+  faceapi = await ml5.faceApi(capture, faceOptions, faceReady);
+  setTimeout(capture.play(), 2000);
   capture.onended(videoEnded); // Handle video end
 }
 
