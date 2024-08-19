@@ -1,7 +1,8 @@
 let capture;
 let captureWidth = 640;
 let captureHeight = 480;
-let directory = "";
+let directory =
+  "C:/Users/nm/Desktop/Museumsnacht/filewatcher/outbox/etjw0ahhjw70207pa7oantj.mp4";
 
 //this is the function that will give use the new fileurl from puppeteer
 
@@ -28,17 +29,15 @@ let faceapi;
 let detections = [];
 
 async function preload() {
-  document.querySelector('input').addEventListener('input', event => {
+  document.querySelector("input").addEventListener("input", (event) => {
     directory = event.target.value;
-    if (directory.endsWith('.mp4')) {
-      s1()
+    if (directory.endsWith(".mp4")) {
+      s1();
     }
-
   });
 }
 
 async function s1() {
-
   createCanvas(captureWidth, captureHeight);
   console.log(directory, "from setup");
   // Load the video and set up face API
@@ -105,7 +104,8 @@ function getMostPrevalentEmotion() {
 
 function draw() {
   background(0);
-  image(capture, 0, 0, captureWidth, captureHeight); // Display the video
+
+  image(capture, 0, 0, 640, 480); // Display the video
 
   // Draw the detections and emotions
   if (detections.length > 0) {

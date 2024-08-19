@@ -3,6 +3,7 @@
 
 import { watchAndFire as fileWatcher } from "./components/filewatcher/filewatcher.js";
 import { videoConverter } from "./components/video_changer/vc.js";
+import { emotionDetection } from "./components/P5_puppeteer-p5-ml5/runP5puppeteer.js";
 import { queuePrompt } from "./components/prompter/prompter.js";
 
 import {
@@ -11,18 +12,23 @@ import {
   outbox,
   promptText,
   workflow,
+  folderPath,
 } from "./config";
 
-let text =
-  "destiny, gadget, underwater, lovestory, animals, photrealistic, computer ";
-let convertedFilePath = "outbox/1489788235.mp4";
-
-let h264FilePath = fileWatcher(
+let changedFilePath = "";
+let h264FilePath = await fileWatcher(
   inbox,
-  () => {
-    console.log("testing");
+  async (filePath) => {
+    let convertedFilepath = await videoConverter(
+      filePath,
+      folderPath + "/outbox",
+      ".mp4"
+    );
+    console.log("This is a converted filepath:", convertedFilepath);
+    let emotion = await emotionDetection(convertedFilepath);
+    console.log(emotion);
   },
-  true
+  false
 );
 
 console.log(h264FilePath);

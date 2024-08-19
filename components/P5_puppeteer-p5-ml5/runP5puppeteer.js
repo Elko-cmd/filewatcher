@@ -15,9 +15,8 @@ async function delay(time) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
 
-
 /**
- * 
+ *
  * Launches a headless browser, sets the viewport size, serves a local HTML file,
  * captures console messages, waits for the sketch to run, and closes the browser.
  *
@@ -25,7 +24,7 @@ async function delay(time) {
  * @return {Promise<string>} A promise that resolves with the detected emotion when the sketch has finished running.
  */
 
-export async function runSketch(filePath) {
+export async function emotionDetection(filePath) {
   // Launch a headless browser
   const browser = await puppeteer.launch({
     headless: false,
@@ -37,12 +36,12 @@ export async function runSketch(filePath) {
   const page = await browser.newPage();
   const fileUrl = `file://${__dirname}/index.html`;
   await page.goto(fileUrl, { waitUntil: "networkidle0" });
-  await page.setViewport({ width: 640, height: 480 });
   await page.reload();
-  await page.$('input').then(el => el.type(filePath));
+  await page.setViewport({ width: 640, height: 480 });
+  await page.$("input").then((el) => el.type(filePath));
 
   let emotion;
-  const consoleMessagePromise = new Promise(resolve => {
+  const consoleMessagePromise = new Promise((resolve) => {
     page.on("console", (msg) => {
       const type = msg.type(); // Get the message type
       const message = msg.text(); // Get the message text
@@ -68,4 +67,3 @@ export async function runSketch(filePath) {
 }
 //emot = await runSketch("1723226863.mp4").catch(console.error);
 //console.log(emot, "emot");
-
