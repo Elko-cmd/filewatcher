@@ -15,11 +15,14 @@ async function delay(time) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
 
+
 /**
+ * 
  * Launches a headless browser, sets the viewport size, serves a local HTML file,
  * captures console messages, waits for the sketch to run, and closes the browser.
  *
- * @return {Promise<void>} A promise that resolves when the sketch has finished running.
+ * @param {string} filePath - The file path to be used in the sketch. //we need to pass the definitiv path of the vidoe to the function here.
+ * @return {Promise<string>} A promise that resolves with the detected emotion when the sketch has finished running.
  */
 export async function runSketch(filePath) {
   // Launch a headless browser
