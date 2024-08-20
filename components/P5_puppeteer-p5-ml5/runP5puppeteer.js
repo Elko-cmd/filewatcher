@@ -56,7 +56,7 @@ export async function emotionDetection(filePath) {
   });
 
   // Wait for the sketch to run for a specified time (e.g., 10 seconds)
-  await delay(20000); // Wait for 10 seconds
+  //await delay(20000); // Wait for 10 seconds
 
   // Wait for the console message promise to be resolved
   emotion = await consoleMessagePromise;

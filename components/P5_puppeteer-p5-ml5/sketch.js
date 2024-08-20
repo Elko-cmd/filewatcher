@@ -4,8 +4,6 @@ let captureHeight = 480;
 let directory =
   "C:/Users/nm/Desktop/Museumsnacht/filewatcher/outbox/etjw0ahhjw70207pa7oantj.mp4";
 
-//this is the function that will give use the new fileurl from puppeteer
-
 let emotions = [
   "neutral",
   "happy",
@@ -27,6 +25,8 @@ let emotionCounters = {
 
 let faceapi;
 let detections = [];
+let isVideoLoaded = false;
+let isFaceApiReady = false;
 
 async function preload() {
   document.querySelector("input").addEventListener("input", (event) => {
@@ -40,6 +40,7 @@ async function preload() {
 async function s1() {
   createCanvas(captureWidth, captureHeight);
   console.log(directory, "from setup");
+
   // Load the video and set up face API
   capture = await createVideo(directory, videoLoaded);
   capture.size(captureWidth, captureHeight);
@@ -50,25 +51,31 @@ async function s1() {
     withExpressions: true,
     withDescriptors: false,
   };
-  faceapi = await ml5.faceApi(capture, faceOptions, faceReady);
-  setTimeout(capture.play(), 2000);
-  capture.onended(videoEnded); // Handle video end
+
+  try {
+    faceapi = await ml5.faceApi(capture, faceOptions, faceReady);
+    setTimeout(() => capture.play(), 2000);
+    capture.onended(videoEnded); // Handle video end
+  } catch (err) {
+    console.error("Error initializing faceApi: ", err);
+  }
 }
 
 function videoLoaded() {
   console.log("Video loaded");
-  // Start the video automatically
+  isVideoLoaded = true;  // Indicate that the video is loaded
   capture.volume(1); // Set volume to 1
 }
 
 function faceReady() {
   console.log("Face API is ready");
+  isFaceApiReady = true;  // Indicate that Face API is ready
   faceapi.detect(gotFaces); // Start detecting faces
 }
 
 function gotFaces(error, result) {
   if (error) {
-    console.log(error);
+    console.error("Error detecting faces: ", error);
     return;
   }
   detections = result;
@@ -105,28 +112,30 @@ function getMostPrevalentEmotion() {
 function draw() {
   background(0);
 
-  image(capture, 0, 0, 640, 480); // Display the video
+  if (isVideoLoaded && isFaceApiReady) {  // Check if both video and Face API are ready
+    image(capture, 0, 0, 640, 480); // Display the video
 
-  // Draw the detections and emotions
-  if (detections.length > 0) {
-    for (let i = 0; i < detections.length; i++) {
-      let points = detections[i].landmarks.positions;
+    // Draw the detections and emotions
+    if (detections.length > 0) {
+      for (let i = 0; i < detections.length; i++) {
+        let points = detections[i].landmarks.positions;
 
-      for (let j = 0; j < points.length; j++) {
-        fill(0, 255, 0);
-        circle(points[j]._x, points[j]._y, 5);
-      }
+        for (let j = 0; j < points.length; j++) {
+          fill(0, 255, 0);
+          circle(points[j]._x, points[j]._y, 5);
+        }
 
-      for (let k = 0; k < emotions.length; k++) {
-        let thisEmotion = emotions[k];
-        let thisEmotionLevel = detections[i].expressions[thisEmotion];
-        fill(255);
-        text(
-          thisEmotion + " value: " + thisEmotionLevel.toFixed(2),
-          40,
-          30 + 30 * k
-        );
-        rect(40, 30 + 30 * k, thisEmotionLevel * 100, 10);
+        for (let k = 0; k < emotions.length; k++) {
+          let thisEmotion = emotions[k];
+          let thisEmotionLevel = detections[i].expressions[thisEmotion];
+          fill(255);
+          text(
+            thisEmotion + " value: " + thisEmotionLevel.toFixed(2),
+            40,
+            30 + 30 * k
+          );
+          rect(40, 30 + 30 * k, thisEmotionLevel * 100, 10);
+        }
       }
     }
   }
