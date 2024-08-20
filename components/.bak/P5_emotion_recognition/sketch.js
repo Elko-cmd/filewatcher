@@ -1,9 +1,9 @@
 export let detecedEmotions;
-export let fileUrl;
+export let fileUrl = "/Users/elko/Documents/GitHub/Museumsnacht/IVG-KHK-2024/Filesystemwatcher/components/P5_puppeteer-p5-ml5/esempio.mp4";
 
 
 let capture;
-let capturewidth = 640;    
+let capturewidth = 640;
 let captureheight = 480;
 var directory = fileUrl;
 
@@ -24,17 +24,17 @@ let detections = [];
 
 function setup() {
   createCanvas(capturewidth, captureheight);
-  
+
   // Load the video instead of the camera
   capture = createVideo(directory, videoLoaded);
   capture.size(capturewidth, captureheight);
-  
+
   capture.hide();
-  
-  const faceOptions = {withLandmarks: true, withExpressions: true, withDescriptors: false};
-  
+
+  const faceOptions = { withLandmarks: true, withExpressions: true, withDescriptors: false };
+
   faceapi = ml5.faceApi(capture, faceOptions, faceReady);
-  
+
   capture.onended(videoEnded); // Add event listener for video end
 }
 
@@ -64,17 +64,17 @@ function getMostPrevalentEmotion() {
   return maxEmotion;
 }
 
-function faceReady(){
+function faceReady() {
   faceapi.detect(gotFaces);
 }
 
-function gotFaces(error, result){
-  if (error){
+function gotFaces(error, result) {
+  if (error) {
     console.log(error);
     return;
   }
   detections = result;
-  
+
   // Update emotion counters
   if (detections.length > 0) {
     for (let i = 0; i < detections.length; i++) {
@@ -83,32 +83,32 @@ function gotFaces(error, result){
       }
     }
   }
-  
+
   faceapi.detect(gotFaces);
 }
 
 function draw() {
   background(0);
-  
+
   image(capture, 0, 0, capturewidth, captureheight); // Display the video
-  
+
   push();
   fill('green');
-  if (detections.length > 0){
-    for (let i = 0; i < detections.length; i++){
+  if (detections.length > 0) {
+    for (let i = 0; i < detections.length; i++) {
       let points = detections[i].landmarks.positions;
 
-      for (let j = 0; j < points.length; j++){
+      for (let j = 0; j < points.length; j++) {
         circle(points[j]._x, points[j]._y, 5);
       }
-      
+
       for (let k = 0; k < emotions.length; k++) {
         let thisemotion = emotions[k];
         let thisemotionlevel = detections[i].expressions[thisemotion];
-        
+
         text(thisemotion + " value: " + thisemotionlevel, 40, 30 + 30 * k);
         rect(40, 30 + 30 * k, thisemotionlevel * 100, 10);
-      }  
+      }
     }
   }
   pop();
