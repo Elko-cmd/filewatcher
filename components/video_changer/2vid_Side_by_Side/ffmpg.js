@@ -1,9 +1,7 @@
 const ffmpeg = require('fluent-ffmpeg');
 
 // Define input files
-const leftInput = './input1.mp4';
-const rightInput = './input2.mp4';
-const output = 'output.mp4';
+// e
 
 // Define the desired output resolution (16:9 aspect ratio)
 const outputWidth = 640;
@@ -11,8 +9,6 @@ const outputHeight = 360;
 const halfWidth = outputWidth / 2;
 
 // Create the ffmpeg command
-
-
 
 /**
  * Creates a side-by-side video by combining two input videos and applying filters.
@@ -50,9 +46,9 @@ export async function sideBySide(leftInput, rightInput, output) {
             })
             .run();
     });
-}
+};
 
 
 
- let outpute = await sideBySide(leftInput, rightInput, output)
- console.log(outpute)
+//let outpute = await sideBySide(leftInput, rightInput, output)
+//console.log(outpute)
