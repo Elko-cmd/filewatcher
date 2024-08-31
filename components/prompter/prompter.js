@@ -68,5 +68,5 @@ export async function queuePrompt(prompt,server_address,filePath=undefined,text 
  
   }
 
- queuePrompt(prompt,"127.0.0.1:8188",undefined)
+ // queuePrompt(prompt,"127.0.0.1:8188",undefined)
 
