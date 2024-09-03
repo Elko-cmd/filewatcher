@@ -1,9 +1,9 @@
 // config.js
 // ComfyUi Configuration
-export let workflow = require("./workflow/workflow_api.json");
+export let workflow = require("./workflow/workflow_api(5).json");
 export let comfyUiServerAddresse = "127.0.0.1:8188/";
 export let outboxComfyui = "C:/ComfyUI_windows_portable/ComfyUI/output";
-export let comfyUIRenderSteps = 25;
+export let comfyUIRenderSteps = 3;
 
 //Syncthing Config
 export let SyncfolderWindows = "C:/Users/SyncthingServiceAcct/Sync";

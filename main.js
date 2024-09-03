@@ -1,6 +1,6 @@
 const [mover, prompter] = await Promise.all([
-    import("./mainMover.js"),
-    import("./mainPrompter.js"),
+  import("./mainMover.js"),
+  import("./mainPrompter.js"),
 ]);
-(mover.default)();
-(prompter.default)();
+//(mover.default)();
+prompter.default();
