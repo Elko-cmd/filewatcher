@@ -33,42 +33,58 @@ async function delay(ms) {
 }
 
 async function evaluateSwitch(t) {
-  let randomName = Math.random().toString(36).substring(2, 15);
-  console.log("Start eval switchcase :", list[t.folder]);
-  t.path = t.path.replace(/\\/g, "/").replace(/\/\//g, "/");
-  console.log("Start eval switchcase :", t.path, typeof t.path);
-  // Convert video
-  let a = await videoConverter(t.path, outbox, t.folder, ".mp4")
-    .then((a) =>
-      console.log("-> ////////////////////////////the converted file is: ", a)
-    ).then((a) => {
-      console.log(a, "a");
-      workflow[3].inputs.text = MuseumslistPrompts[t.folder];
-      workflow[105].inputs.video = a;
-      workflow[104].inputs.filename_prefix =
-        "ki_" + randomName + list[t.folder];
-      workflow[7].inputs.steps = comfyUIRenderSteps;
-      workflow[123].inputs.output_path = `C:/Users/SyncthingServiceAcct/Sync/outbox/IVG_KI_Museumsnacht_${randomName}_${
-        list[t.folder]
-      }`;
-      console.log(workflow, "b");
-      // Add the converted video to the queue
-    }).then(async (a) => {
-      let b = await queuePrompt(
-        workflower,
-        comfyUiServerAddresse,
-        a,
-        MuseumslistPrompts[t.folder],
-        "okle"
-      ).catch(console.error);
+  // Generate a random name to ensure unique filename prefixes
+  const randomName = Math.random().toString(36).substring(2, 15);
 
-      return {
-        success: true,
-        message: b,
-      };
-    });
-  //set
+  // Normalize the path by replacing backslashes with forward slashes
+  t.path = t.path.replace(/\\/g, "/").replace(/\/\//g, "/");
+  console.log(`Start eval switchcase: ${list[t.folder]} at path: ${t.path}`);
+
+  try {
+    // Convert the video to the desired format
+    const convertedFile = await videoConverter(t.path, outbox, t.folder, ".mp4");
+    console.log("Converted file path:", convertedFile);
+
+    // Configure the workflow with the converted video and other parameters
+    configureWorkflow(randomName, convertedFile, t.folder);
+
+    // Queue the prompt and wait for the result
+    const queueResult = await queuePrompt(
+      workflower,
+      comfyUiServerAddresse,
+      convertedFile,
+      MuseumslistPrompts[t.folder],
+      "okle"
+    );
+
+    // Return the success response with the queue result
+    return {
+      success: true,
+      message: queueResult,
+    };
+  } catch (error) {
+    // Log the error and return a failure response
+    console.error("Error during evaluation:", error);
+    return {
+      success: false,
+      message: error.message,
+    };
+  }
 }
+
+// Helper function to configure the workflow with necessary parameters
+function configureWorkflow(randomName, convertedFile, folder) {
+  // Access workflow steps and inputs, assigning the converted file and other configurations
+  workflow[3].inputs.text = MuseumslistPrompts[folder];
+  workflow[105].inputs.video = convertedFile;
+  workflow[104].inputs.filename_prefix = `ki_${randomName}${list[folder]}`;
+  workflow[7].inputs.steps = comfyUIRenderSteps;
+  workflow[123].inputs.output_path = `C:/Users/SyncthingServiceAcct/Sync/outbox/IVG_KI_Museumsnacht_${randomName}_${list[folder]}`;
+  
+  // Log the configured workflow for debugging purposes
+  console.log("Configured workflow:", JSON.stringify(workflow, null, 2));
+}
+
 
 let t0 = async () => {
   while (true) {
