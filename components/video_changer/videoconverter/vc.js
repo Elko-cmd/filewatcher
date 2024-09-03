@@ -5,8 +5,8 @@ const hbjs = require("handbrake-js");
  *
  * @param {string} [inputPath=""] - The path of the input video file.
  * @param {string} [outboxPath="../../outbox"] - The path where the converted video file will be saved.
- * @param {string} [fileFormat="mp4"] - The file format of the converted video file.
  * @param {string} [IVGName="IVG"] - The name of the folder where the converted video came from.
+ * @param {string} [fileFormat="mp4"] - The file format of the converted video file.
  * @return {Promise<string>} The path of the converted video file.
  */
 export async function videoConverter(
@@ -15,22 +15,25 @@ export async function videoConverter(
   IVGName = "IVG",
   fileFormat = "mp4"
 ) {
-  let randomName =
+  const randomName =
     Math.random().toString(36).substring(2, 15) +
     Math.random().toString(36).substring(2, 15);
+
+  const outPath = `${outboxPath}/${IVGName}_${randomName}.${fileFormat}`;
+
   console.log(randomName);
 
-  let outPath = outboxPath + "/" + IVGName + "_" + randomName + fileFormat;
-
-  try {
-    await hbjs
+  // Return a promise that resolves when the conversion is complete
+  return new Promise((resolve, reject) => {
+    hbjs
       .spawn({
         input: inputPath,
         output: outPath,
       })
       .on("error", (err) => {
-        // invalid user input, no video found etc
-        throw err;
+        // Handle any error that occurs during the conversion process
+        console.error("Error: ", err);
+        reject(err);
       })
       .on("progress", (progress) => {
         console.log(
@@ -40,19 +43,15 @@ export async function videoConverter(
         );
       })
       .on("complete", () => {
-        console.log("done");
+        console.log("Conversion done");
         console.log(outPath);
-        return outPath;
+        resolve(outPath); // Resolve the promise with the output path
       });
-  } catch (err) {
-    console.error("Error: ", err);
-    throw err;
-  }
-
- 
+  });
 }
+
 // This is an example of how to use the videoConverter function.
 
- //let u = await videoConverter("C:\\Users\\SyncthingServiceAcct\\Sync\\inbox\\ivg-1\\7232aee212.h264", "../out", "0001", ".mp4");
+//let u = await videoConverter("C:\\Users\\SyncthingServiceAcct\\Sync\\inbox\\ivg-1\\7232aee212.h264", "../out", "0001", ".mp4");
 //console.log(u);
 

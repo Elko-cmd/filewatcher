@@ -33,7 +33,7 @@ export let MuseumslistPrompts = {
   "ivg-4": "(Masterpiece, Best Quality:1.2),IVG-4	Sepulkral, Death, santa muerte happy, sad, ",
   "ivg-5": "(Masterpiece, Best Quality:1.2),IVG-5	Hafen, creativ, pink, rosa, sunset, haven, ships",
   "ivg-6": "(Masterpiece, Best Quality:1.2),IVG-6	Frid, contempoary art, white cube, clean",
-  "ivg-7": "(Masterpiece, Best Quality:1.2),IVG-7	Ottoneum, dinosaurs, red, green, yellow",
+  "ivg-7": "(Masterpiece, Best Quality:1.2),IVG-7	Ottoneum, dinosaurs, red, green, yellow, wild, beastly ",
   "ivg-8": "(Masterpiece, Best Quality:1.2),IVG-8	KHK	Server",
   "ivg-9": "(Masterpiece, Best Quality:1.2),IVG-9	WH-22	Brain",
 };
