@@ -38,29 +38,36 @@ async function evaluateSwitch(t) {
   t.path = t.path.replace(/\\/g, "/").replace(/\/\//g, "/");
   console.log("Start eval switchcase :", t.path, typeof t.path);
   // Convert video
-  let a = await videoConverter(t.path, outbox, t.folder, ".mp4").then((a) =>
-    console.log("-> ////////////////////////////the converted file is: ", a)
-  );
-  //set
-  workflow[3].inputs.text = MuseumslistPrompts[t.folder];
-  workflow[104].inputs.filename_prefix = "ki_" + randomName + list[t.folder];
-  workflow[7].inputs.steps = comfyUIRenderSteps;
-  workflow[123].inputs.output_path = `C:/Users/SyncthingServiceAcct/Sync/outbox/IVG_KI_Museumsnacht_${randomName}_${
-    list[t.folder]
-  }`;
-  // Add the converted video to the queue
-  let b = await queuePrompt(
-    workflower,
-    comfyUiServerAddresse,
-    a,
-    MuseumslistPrompts[t.folder],
-    "okle"
-  ).catch(console.error);
+  let a = await videoConverter(t.path, outbox, t.folder, ".mp4")
+    .then((a) =>
+      console.log("-> ////////////////////////////the converted file is: ", a)
+    ).then((a) => {
+      console.log(a, "a");
+      workflow[3].inputs.text = MuseumslistPrompts[t.folder];
+      workflow[105].inputs.video = a;
+      workflow[104].inputs.filename_prefix =
+        "ki_" + randomName + list[t.folder];
+      workflow[7].inputs.steps = comfyUIRenderSteps;
+      workflow[123].inputs.output_path = `C:/Users/SyncthingServiceAcct/Sync/outbox/IVG_KI_Museumsnacht_${randomName}_${
+        list[t.folder]
+      }`;
+      console.log(workflow, "b");
+      // Add the converted video to the queue
+    }).then(async (a) => {
+      let b = await queuePrompt(
+        workflower,
+        comfyUiServerAddresse,
+        a,
+        MuseumslistPrompts[t.folder],
+        "okle"
+      ).catch(console.error);
 
-  return {
-    success: true,
-    message: b,
-  };
+      return {
+        success: true,
+        message: b,
+      };
+    });
+  //set
 }
 
 let t0 = async () => {

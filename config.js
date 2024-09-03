@@ -3,7 +3,7 @@
 export let workflow = require("./workflow/workflow_api(5).json");
 export let comfyUiServerAddresse = "127.0.0.1:8188/";
 export let outboxComfyui = "C:/ComfyUI_windows_portable/ComfyUI/output";
-export let comfyUIRenderSteps = 3;
+export let comfyUIRenderSteps = 25;
 
 //Syncthing Config
 export let SyncfolderWindows = "C:/Users/SyncthingServiceAcct/Sync";
@@ -30,10 +30,10 @@ export let MuseumslistPrompts = {
     "(Masterpiece, Best Quality:1.2),Transform the video into a visual journey through the Hessisches Landesmuseum in Kassel. Begin with the museums exterior, highlighting its historic architecture with the dominant central tower and Renaissance-inspired design. Transition into the interior, moving through the three levels of exhibition space. Showcase the diverse collections, starting with ancient artifacts from the Prehistoric and Early History section, such as ancient tools, weapons, and burial items. Next, glide through the Applied Arts collection, focusing on medieval sculptures, ornate altars, and intricately designed objects like historical glass and porcelain. Finally, enter the Folk Art section, revealing traditional Hessian costumes, handmade toys, and domestic items from the 19th century. The atmosphere should evoke a sense of history and cultural richness, with soft lighting and a color palette that emphasizes the earthy tones of ancient artifacts and the vibrant hues of folk art. Incorporate subtle animations, such as shimmering light on gemstones or the gentle movement of fabric in traditional costumes, to bring the museums exhibits to life.",
   "ivg-3":
     "(Masterpiece, Best Quality:1.2),Transform the video into a vibrant, colorful journey through the enchanting world of the Brothers Grimm fairy tales. Each scene should depict iconic moments from various stories, such as Rapunzels golden hair cascading down a tall tower, Hansel and Gretels candy-covered gingerbread house in a lush forest, and Cinderellas sparkling glass slipper at a grand ball. The overall atmosphere should be magical and whimsical, with bright, saturated colors like rich greens, deep blues, and shimmering golds. Add playful elements like twinkling stars, glowing lanterns, and lively woodland creatures that move through the scenes, bringing the fairy tales to life. The characters should be expressive and full of personality, dressed in elaborate, colorful costumes that reflect the fantastical nature of their stories. The transitions between scenes should be smooth and fluid, creating a seamless journey through the Brothers Grimms world of wonder and magic.",
-  "ivg-4": "(Masterpiece, Best Quality:1.2),IVG-4	Sepulkral",
-  "ivg-5": "(Masterpiece, Best Quality:1.2),IVG-5	Hafen",
-  "ivg-6": "(Masterpiece, Best Quality:1.2),IVG-6	Fridi",
-  "ivg-7": "(Masterpiece, Best Quality:1.2),IVG-7	Ottoneum",
+  "ivg-4": "(Masterpiece, Best Quality:1.2),IVG-4	Sepulkral, Death, santa muerte happy, sad, ",
+  "ivg-5": "(Masterpiece, Best Quality:1.2),IVG-5	Hafen, creativ, pink, rosa, sunset, haven, ships",
+  "ivg-6": "(Masterpiece, Best Quality:1.2),IVG-6	Frid, contempoary art, white cube, clean",
+  "ivg-7": "(Masterpiece, Best Quality:1.2),IVG-7	Ottoneum, dinosaurs, red, green, yellow",
   "ivg-8": "(Masterpiece, Best Quality:1.2),IVG-8	KHK	Server",
   "ivg-9": "(Masterpiece, Best Quality:1.2),IVG-9	WH-22	Brain",
 };
