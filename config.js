@@ -31,9 +31,9 @@ export let MuseumslistPrompts = {
   "ivg-3":
     "(Masterpiece, Best Quality:1.2),Transform the video into a vibrant, colorful journey through the enchanting world of the Brothers Grimm fairy tales. Each scene should depict iconic moments from various stories, such as Rapunzels golden hair cascading down a tall tower, Hansel and Gretels candy-covered gingerbread house in a lush forest, and Cinderellas sparkling glass slipper at a grand ball. The overall atmosphere should be magical and whimsical, with bright, saturated colors like rich greens, deep blues, and shimmering golds. Add playful elements like twinkling stars, glowing lanterns, and lively woodland creatures that move through the scenes, bringing the fairy tales to life. The characters should be expressive and full of personality, dressed in elaborate, colorful costumes that reflect the fantastical nature of their stories. The transitions between scenes should be smooth and fluid, creating a seamless journey through the Brothers Grimms world of wonder and magic.",
   "ivg-4": "(Masterpiece, Best Quality:1.2),IVG-4	Sepulkral, Death, santa muerte happy, sad, ",
-  "ivg-5": "(Masterpiece, Best Quality:1.2),IVG-5	Hafen, creativ, pink, rosa, sunset, haven, ships",
+  "ivg-5": "(Masterpiece, Best Quality:1.2),IVG-5	Hafen, creativ, pink, rosa, sunset, haven, ships, golden hour",
   "ivg-6": "(Masterpiece, Best Quality:1.2),IVG-6	Frid, contempoary art, white cube, clean",
-  "ivg-7": "(Masterpiece, Best Quality:1.2),IVG-7	Ottoneum, dinosaurs, red, green, yellow, wild, beastly ",
+  "ivg-7": "(Masterpiece, Best Quality:1.2),IVG-7	Ottoneum, dinosaurs, wild, beastly ",
   "ivg-8": "(Masterpiece, Best Quality:1.2),IVG-8	KHK	Server",
   "ivg-9": "(Masterpiece, Best Quality:1.2),IVG-9	WH-22	Brain",
 };
