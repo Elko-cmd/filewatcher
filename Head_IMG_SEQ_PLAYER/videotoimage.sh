@@ -28,5 +28,10 @@ process_videos() {
 # Modify the following variable to point to the base directory containing the video files
 base_dir="/Users/elko/Downloads/forElko (1)/240901/IVG_001"
 
-# Start processing
-process_videos "$base_dir"
+# Watch the directory for new files
+inotifywait -m -e create --format %f "$base_dir" | while read file; do
+  if [[ "$file" == *.mp4 ]]; then
+    process_videos "$base_dir"
+  fi
+done &
+
