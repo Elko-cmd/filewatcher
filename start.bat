@@ -9,10 +9,14 @@ set JS_FILE_PATH="C:\Users\nm\Desktop\Museumsnacht\filewatcher\main.js"         
 echo Starting Stable Diffusion...
 start "" %STABLE_DIFFUSION_PATH% || echo Stable Diffusion failed to start & pause
 
-:: Open Syncthing
-echo Starting Syncthing...
-start "" %SYNCTHING_PATH% || echo Syncthing failed to start & pause
-
+:: Ask user to start Syncthing
+set /p answer=Do you want to start Syncthing? (y/n): 
+if /i "%answer%"=="y" (
+    echo Starting Syncthing...
+    start "" %SYNCTHING_PATH% || echo Syncthing failed to start & pause
+) else (
+    echo Skipping Syncthing.
+)
 :: Run JavaScript file with Bun
 echo Running JavaScript file with Bun...
 start cmd /k bun run %JS_FILE_PATH% || echo JavaScript file failed to run & pause

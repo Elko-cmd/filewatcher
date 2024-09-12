@@ -45,7 +45,9 @@ export async function watchInboxAndChildDirectories(inbox) {
         if (
           filename &&
           filename.endsWith(".h264") &&
-          filename !== ".DS_Store"
+          filename !== ".DS_Store" &&
+          !filename.includes(".latest.h264") &&
+          !filename.includes(".overlay.h264")
         ) {
           const changedFilePath = path.join(inbox, filename);
           const folder = path.dirname(changedFilePath).split(path.sep).pop();
@@ -59,65 +61,72 @@ export async function watchInboxAndChildDirectories(inbox) {
   });
 }
 
-
-
 /**
  * Watches the specified inbox directory for .mp4 files and moves them to the outbox directory after validating the file size.
  *
  * @param {string} inbox - The path of the directory to watch for .mp4 files.
  * @param {string} outbox - The path of the directory to move the validated files to.
  * @param {string} prefix - The prefix to add to the moved file names.
+ * @param {string} postfix - The postfix to add to the moved file names.
  * @returns {Promise<void>}
  */
-export async function watchAndMoveMp4Files(inbox, outbox, prefix) {
+export async function watchAndMoveMp4Files(inbox, outbox, prefix, postfix) {
   return new Promise((resolve, reject) => {
-    const watcher = fs.watch(inbox, { recursive: true }, async (eventType, filename) => {
-      if (filename && filename.endsWith('.mp4')) {
-        const changedFilePath = path.join(inbox, filename);
-        console.log(`Detected change in file: ${changedFilePath}`);
+    const watcher = fs.watch(
+      inbox,
+      { recursive: true },
+      async (eventType, filename) => {
+        if (filename && filename.endsWith(".mp4")) {
+          const changedFilePath = path.join(inbox, filename);
+          console.log(`Detected change in file: ${changedFilePath}`);
 
-        // Adding a delay to ensure the file is fully written before access
-        setTimeout(async () => {
-          try {
-            // Check if the file still exists
-            await fs.promises.access(changedFilePath, fs.constants.F_OK);
+          // Adding a delay to ensure the file is fully written before access
+          setTimeout(async () => {
+            try {
+              // Check if the file still exists
+              await fs.promises.access(changedFilePath, fs.constants.F_OK);
 
-            // Get the file stats to validate size
-            const stats = await fs.promises.stat(changedFilePath);
-            if (stats.size > 0) {
-              const nameWithoutExtension = filename.replace(/\.mp4$/, '');
-              const cleanedName = nameWithoutExtension.replace(/_\d+$/, '');
-              const newFileName = `${prefix}_${cleanedName}.mp4`;
-              const destination = path.join(outbox, newFileName);
+              // Get the file stats to validate size
+              const stats = await fs.promises.stat(changedFilePath);
+              if (stats.size > 0) {
+                const nameWithoutExtension = filename.replace(/\.mp4$/, "");
+                const cleanedName = nameWithoutExtension.replace(/_\d+$/, "");
+                const newFileName = `${prefix}${cleanedName}${postfix}.mp4`;
+                const destination = path.join(outbox, newFileName);
 
-              try {
-                await fs.promises.rename(changedFilePath, destination);
-                console.log(`Moved ${changedFilePath} to ${destination}`);
-              } catch (renameError) {
-                console.error(`Error moving file to ${destination}:`, renameError);
+                try {
+                  await fs.promises.rename(changedFilePath, destination);
+                  console.log(`Moved ${changedFilePath} to ${destination}`);
+                } catch (renameError) {
+                  console.error(
+                    `Error moving file to ${destination}:`,
+                    renameError
+                  );
+                }
               }
+            } catch (accessError) {
+              console.error(
+                `Error accessing or processing file at ${changedFilePath}:`,
+                accessError
+              );
             }
-          } catch (accessError) {
-            console.error(`Error accessing or processing file at ${changedFilePath}:`, accessError);
-          }
-        }, 100); // Adjust the delay time as needed
+          }, 100); // Adjust the delay time as needed
+        }
       }
-    });
+    );
 
     // Handle watcher errors (e.g., if the inbox path is invalid)
-    watcher.on('error', (err) => {
-      console.error('Watcher error:', err);
+    watcher.on("error", (err) => {
+      console.error("Watcher error:", err);
       reject(err);
     });
 
     // Resolve when the process completes, if needed (optional)
-    watcher.on('close', () => {
+    watcher.on("close", () => {
       resolve();
     });
   });
 }
-
-
 
 
 /**
@@ -129,7 +138,7 @@ export async function watchAndMoveMp4Files(inbox, outbox, prefix) {
  */
 export function watchAndMoveValidMp4Files2(inbox, outbox) {
   fs.watch(inbox, { recursive: true }, (eventType, filename) => {
-    if (filename && filename.endsWith('.mp4')) {
+    if (filename && filename.endsWith(".mp4")) {
       const changedFilePath = path.join(inbox, filename);
       console.log(`Detected change in file: ${changedFilePath}`);
 
@@ -148,7 +157,10 @@ export function watchAndMoveValidMp4Files2(inbox, outbox) {
             // Check existence of the file before attempting to move
             fs.access(changedFilePath, fs.constants.F_OK, (err) => {
               if (err) {
-                console.error(`File does not exist anymore: ${changedFilePath}`, err);
+                console.error(
+                  `File does not exist anymore: ${changedFilePath}`,
+                  err
+                );
                 return;
               }
 

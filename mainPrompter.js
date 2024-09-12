@@ -42,7 +42,12 @@ async function evaluateSwitch(t) {
 
   try {
     // Convert the video to the desired format
-    const convertedFile = await videoConverter(t.path, outbox, t.folder, ".mp4");
+    const convertedFile = await videoConverter(
+      t.path,
+      outbox,
+      t.folder,
+      ".mp4"
+    );
     console.log("Converted file path:", convertedFile);
 
     // Configure the workflow with the converted video and other parameters
@@ -79,12 +84,11 @@ function configureWorkflow(randomName, convertedFile, folder) {
   workflow[105].inputs.video = convertedFile;
   workflow[104].inputs.filename_prefix = `ki_${randomName}${list[folder]}`;
   workflow[7].inputs.steps = comfyUIRenderSteps;
-  workflow[123].inputs.output_path = `C:/Users/SyncthingServiceAcct/Sync/outbox/IVG_KI_Museumsnacht_${randomName}_${list[folder]}`;
-  
-  // Log the configured workflow for debugging purposes
-  console.log("Configured workflow:", JSON.stringify(workflow, null, 2));
-}
+  //workflow[123].inputs.output_path = `C:/Users/SyncthingServiceAcct/Sync/outbox/IVG_KI_Museumsnacht_${randomName}_${list[folder]}`;
 
+  // Log the configured workflow for debugging purposes
+  //console.log("Configured workflow:", JSON.stringify(workflow, null, 2));
+}
 
 let t0 = async () => {
   while (true) {

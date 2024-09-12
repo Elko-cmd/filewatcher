@@ -2,5 +2,5 @@ const [mover, prompter] = await Promise.all([
   import("./mainMover.js"),
   import("./mainPrompter.js"),
 ]);
-//(mover.default)();
+(mover.default)();
 prompter.default();

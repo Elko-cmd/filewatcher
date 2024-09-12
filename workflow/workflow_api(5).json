@@ -319,32 +319,6 @@
     "_meta": {
       "title": "KSampler"
     }
-  },
-  "123": {
-    "inputs": {
-      "output_path": "001",
-      "filename_prefix": "MN_",
-      "filename_delimiter": "_",
-      "filename_number_padding": 4,
-      "filename_number_start": "false",
-      "extension": "png",
-      "dpi": 300,
-      "quality": 100,
-      "optimize_image": "true",
-      "lossless_webp": "false",
-      "overwrite_mode": "false",
-      "show_history": "false",
-      "show_history_by_prefix": "true",
-      "embed_workflow": "true",
-      "show_previews": "true",
-      "images": [
-        "10",
-        0
-      ]
-    },
-    "class_type": "Image Save",
-    "_meta": {
-      "title": "Image Save"
-    }
   }
+
 }
